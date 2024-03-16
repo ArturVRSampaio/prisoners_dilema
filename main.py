@@ -1,6 +1,5 @@
-
 from typing import List
-from itertools import combinations_with_replacement
+from itertools import combinations
 
 from PrisonerInteraction import PrisonerInteraction
 from prisoner import Prisoner
@@ -18,19 +17,19 @@ def play_against(prisoner1: Prisoner, prisoner2: Prisoner):
         prisoner1.add_years_in_prison(2)
         prisoner2.add_years_in_prison(2)
     elif p1_testify and not p2_testify:
-        prisoner1.add_years_in_prison(3)
-        prisoner2.add_years_in_prison(0)
-    elif not p1_testify and p2_testify:
         prisoner1.add_years_in_prison(0)
         prisoner2.add_years_in_prison(3)
+    elif not p1_testify and p2_testify:
+        prisoner1.add_years_in_prison(3)
+        prisoner2.add_years_in_prison(0)
     elif not p1_testify and not p2_testify:
         prisoner1.add_years_in_prison(1)
         prisoner2.add_years_in_prison(1)
 
 
-def combine_all_prisoners(prisoners: List[Prisoner], rounds : int = 1):
+def combine_all_prisoners(prisoners: List[Prisoner], rounds: int = 1):
     for i in range(rounds):
-        prisoner_permutations = combinations_with_replacement(prisoners, 2)
+        prisoner_permutations = combinations(prisoners, 2)
 
         for pair in prisoner_permutations:
             play_against(pair[0], pair[1])
@@ -47,7 +46,7 @@ prisoners.append(Prisoner(TriggerStrategy()))
 prisoners.append(Prisoner(TitForTatStrategy()))
 prisoners.append(Prisoner(SuspiciousTitForTatStrategy()))
 
-combine_all_prisoners(prisoners, 40)
+combine_all_prisoners(prisoners, 60)
 
 for prisoner in prisoners:
     print(prisoner)
